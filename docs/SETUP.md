@@ -32,25 +32,27 @@ You will end up with:
    repository, press the **Copy raw file** button, and paste it into the editor.
 3. Press **Run**. You should see "Success. No rows returned".
 
-## 3. Set up sign-in emails
+## 3. Sign-in emails (nothing to do yet)
 
-People sign in with a 6-digit code sent by email, which works even inside the
-installed phone app.
+People sign in with a link Supabase emails them. With Supabase's built-in
+email the message can't be customized, and that's fine: the link works as long
+as it is opened on the same phone or computer (and browser) where they asked
+for it.
 
-1. Open **Authentication → Emails** (called **Email Templates** on some screens).
-2. Open the **Magic Link** template. Set the subject to `Your PHRF sign-in code`
-   and replace the message with:
+Later, when you connect your own email sender (see "Good to know" below),
+Supabase unlocks the templates. Then change the **Magic Link** and **Confirm
+signup** templates to include a 6-digit code, which also works inside the
+installed phone app:
 
-   ```html
-   <h2>Your South Texas PHRF sign-in code</h2>
-   <p>Enter this code in the app:</p>
-   <p style="font-size:28px;font-weight:bold;letter-spacing:4px">{{ .Token }}</p>
-   <p>Or tap this link on the same device: <a href="{{ .ConfirmationURL }}">Sign in</a></p>
-   <p>If you didn't ask to sign in, you can ignore this email.</p>
-   ```
+```html
+<h2>Your South Texas PHRF sign-in code</h2>
+<p>Enter this code in the app:</p>
+<p style="font-size:28px;font-weight:bold;letter-spacing:4px">{{ .Token }}</p>
+<p>Or tap this link on the same device: <a href="{{ .ConfirmationURL }}">Sign in</a></p>
+<p>If you didn't ask to sign in, you can ignore this email.</p>
+```
 
-3. Do the same for the **Confirm signup** template (first-time sign-ins use it).
-4. Save both.
+The sign-in page already accepts either the link or the code.
 
 ## 4. Copy two values for the next step
 

@@ -38,7 +38,7 @@ export function LoginForm({ next }: { next: string }) {
   if (step === "code") {
     return (
       <form onSubmit={verify} className="card stack">
-        <p>We sent a code to <strong>{email}</strong>. Type it here, or tap the link in the email.</p>
+        <p>Check your email at <strong>{email}</strong> and tap the sign-in link, on this same device and browser. If the email shows a 6-digit code instead, type it here.</p>
         <label>
           Code
           <input inputMode="numeric" autoComplete="one-time-code" value={code} onChange={(e) => setCode(e.target.value)} required />

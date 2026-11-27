@@ -5,7 +5,7 @@ someone else. Written for people who do not write code.
 
 ## How an application moves
 
-1. **Owner applies** at `/apply`. They sign in with an emailed code, fill in the
+1. **Owner applies** at `/apply`. They sign in with a link sent by email, fill in the
    boat, sails and prop, and upload photos and sail sheets. The boat is matched
    to an existing record by sail number ("USA 1234", "usa-1234" and "USA1234"
    count as the same boat).
@@ -126,5 +126,5 @@ Checklist for the new maintainer:
 | The site says "Almost there" | The two Supabase settings are missing in Vercel → Settings → Environment Variables. Add them and redeploy. |
 | Error loading anything, after a quiet spell | The free Supabase project paused. Open the Supabase dashboard and press **Restore project**. |
 | "Too many codes were sent recently" | The built-in email limit. Wait an hour, or set up custom SMTP (see SETUP). |
-| Sign-in link opens a page saying it didn't work | It was opened in a different browser or the phone app. Type the 6-digit code instead. |
+| Sign-in link opens a page saying it didn't work | It was opened in a different browser or from the installed phone app. Request a new link and open it on the same device and browser. Once custom email is set up, the 6-digit code avoids this. |
 | Someone can't see the Committee menu | Their role is still *Boat owner*. Change it on the Admin page. |
