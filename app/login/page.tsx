@@ -9,7 +9,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
     <div style={{ maxWidth: 460 }}>
       <h1>Sign in</h1>
       <p className="muted">
-        No password needed. Enter your email and we will send you a 6-digit code (and a link). First time here? This
+        No password needed. Enter your email and we will email you a sign-in link. First time here? This
         creates your account.
       </p>
       {sp.error && <p className="notice error">{sp.error}</p>}

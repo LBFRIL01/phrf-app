@@ -13,7 +13,7 @@ registration, scoring and results), built on the same boat records.
 | For | What they can do |
 | --- | --- |
 | Anyone | See the current rating list, search it, download it as a spreadsheet for scoring software |
-| Boat owners | Sign in with an emailed code (no password), apply (new, renewal, change, appeal), upload photos and sail sheets, follow their application's status |
+| Boat owners | Sign in with an emailed link (no password), apply (new, renewal, change, appeal), upload photos and sail sheets, follow their application's status |
 | Committee members | See every application with its files, compare with sister ships, discuss, and vote with adjustments and reasons, or recuse |
 | Rating chair | Open and close voting, ask the owner for more information, issue the final rating, and undo a rating if needed |
 | Admins | Give people roles, set the quorum and review window, and import past applications from a spreadsheet |
