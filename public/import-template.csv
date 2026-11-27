@@ -1,0 +1,2 @@
+Sail Number,Boat Name,Make,Model,Year,LOA,Home Port,Owner Name,Owner Email,Owner Phone,Club,Type,Status,Rating,Configuration,Date Received,Date Rated,Expires,Drive Folder,Notes
+USA 12345,Example Boat,J/Boats,J/105,1995,34.5,Corpus Christi,Pat Sailor,pat@example.com,361-555-0100,Bay Yacht Club,Renewal,Rated,87,Spinnaker,2025-02-14,2025-03-01,2026-03-01,https://drive.google.com/drive/folders/...,Delete this example row before importing
