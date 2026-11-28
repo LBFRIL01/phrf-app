@@ -196,16 +196,20 @@ const notice = async (page) => (await page.locator('.notice').allInnerTexts()).j
     '42,Old Salt,Catalina,30,Nate New,"Nate <nate@example.com>",3/1/2025,approved,180,https://drive.google.com/x,white',
     'USA 77,Zephyr,Beneteau,First 36.7,Ida Import,ida@example.com,2025-06-10,pending,,,',
     'USA 1234,Windward,J/Boats,J/105,Olive Owner,olive@example.com,1/15/2025,rated,87,,',
+    ',Gulf Breeze,Hunter,30,Chris Mac,,2/10/2025,rated,183,,',
   ].join('\n'));
   await brooke.goto(BASE + '/admin/import');
   await brooke.setInputFiles('input[type=file]', SP + '/inventory.csv');
-  await brooke.waitForSelector('text=3 applications found');
+  await brooke.waitForSelector('text=4 applications found');
   await brooke.screenshot({ path: SP + '/shot-import.png', fullPage: true });
-  await brooke.click('button:has-text("Import 3 applications")');
-  await brooke.waitForSelector('text=Imported 3 applications');
-  assert(sql("select count(*) from boats") === '3', 'boats after import (USA 1234 reused)');
-  assert(sql("select count(*) from applications where source='import'") === '3', 'imported apps');
-  ok('CSV import with preview: 3 rows, existing boat matched by sail number');
+  await brooke.click('button:has-text("Import 4 applications")');
+  await brooke.waitForSelector('text=Imported 4 applications');
+  assert(sql("select count(*) from boats") === '4', 'boats after import (USA 1234 reused)');
+  assert(sql("select count(*) from applications where source='import'") === '4', 'imported apps');
+  await brooke.goto(BASE + '/committee/boats');
+  assert(await brooke.locator('tr', { hasText: 'Gulf Breeze' }).locator('text=Sail # needed').count() === 1, 'sail # needed badge');
+  ok('CSV import with preview: 4 rows, existing boat matched by sail number, boat without a sail number flagged');
+  await brooke.goto(BASE + '/admin/import');
   await brooke.click('button:has-text("Undo import")');
   await brooke.waitForSelector('text=Import undone');
   assert(sql("select count(*) from boats") === '1', 'undo import boats');

@@ -115,7 +115,7 @@ export async function updateBoat(f: FormData) {
       patch[k] = n;
     } else patch[k] = v || null;
   }
-  if (!patch.sail_number) back(path, "error", "Sail number is required.");
+  if (!patch.sail_number && !patch.name) back(path, "error", "A boat needs a sail number or a name.");
   const { data: before } = await supabase.from("boats").select("*").eq("id", id).single();
   const changes: Record<string, { from: unknown; to: unknown }> = {};
   for (const k of BOAT_FIELDS) {

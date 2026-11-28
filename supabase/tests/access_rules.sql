@@ -137,5 +137,30 @@ select pg_temp.expect_error($$insert into storage.objects (bucket_id, name) sele
 select pg_temp.expect_error($$select log_activity('rated', null, null)$$, 'permission denied');
 select pg_temp.expect_error($$select log_boat_edit((select id from boats limit 1), '{}')$$, 'Only the committee');
 
+-- rows without a sail number: matched by boat name + owner; filled in when the owner applies
+select pg_temp.as_user('00000000-0000-0000-0000-00000000000a');
+select pg_temp.expect_error($$select import_applications('[{"owner_name":"Nobody"}]'::jsonb)$$, 'needs a sail number or a boat name');
+select import_applications('[
+  {"boat_name":"Mystery","owner_name":"Olive Owner","owner_email":"owner@example.com","status":"received"},
+  {"boat_name":"Drifter","owner_name":"No Email Ned","status":"rated","rating":"200"},
+  {"boat_name":"drifter ","owner_name":"no email ned","type":"change","status":"received"}
+]'::jsonb, 'no-sails.csv');
+reset role;
+do $$ begin
+  assert (select count(*) from boats where sail_number is null) = 2, 'two boats without sail numbers';
+  assert (select count(*) from owners where full_name ilike 'no email ned') = 1, 'owner without email matched by name';
+  assert (select count(*) from applications a join boats b on b.id = a.boat_id where b.name = 'Drifter') = 2, 'second Drifter row matched same boat';
+  assert (select rating from public_ratings() where boat_name = 'Drifter') = 200, 'rating published without sail number';
+end $$;
+set role authenticated;
+select pg_temp.as_user('00000000-0000-0000-0000-00000000000c');
+select * from submit_application('{"type":"renewal","owner":{"full_name":"Olive Owner"},"boat":{"sail_number":"USA 999","name":"Mystery"}}'::jsonb);
+reset role;
+do $$ begin
+  assert (select sail_number from boats where name = 'Mystery') = 'USA 999', 'owner application fills in sail number';
+  assert (select count(*) from boats where name = 'Mystery') = 1, 'no duplicate boat';
+end $$;
+set role authenticated;
+
 reset role;
 do $$ begin raise notice 'ALL DATABASE CHECKS PASSED'; end $$;

@@ -55,7 +55,10 @@ To bring them in:
 4. Press **Import**. Rows marked rated (or that have a rating) publish that
    rating. If something looks wrong afterwards, press **Undo import**.
 
-Only a sail number is required. The template linked on the import page shows
+Each row needs a sail number or a boat name. A boat without a sail number
+shows **Sail # needed** in the committee pages; open the boat and add it, or
+it is filled in automatically when the owner applies online with the same
+boat name. The template linked on the import page shows
 every column the app understands. Attachments stay in Google Drive: put the
 folder link in the "Drive folder" column and it appears on the application.
 

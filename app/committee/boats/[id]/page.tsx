@@ -11,7 +11,7 @@ import { updateBoat } from "../../actions";
 export const metadata = { title: "Boat" };
 
 const FIELDS: [keyof Boat, string, string?][] = [
-  ["sail_number", "Sail number *"], ["name", "Name"], ["make", "Builder"], ["model", "Model"], ["year", "Year", "numeric"],
+  ["sail_number", "Sail number"], ["name", "Name"], ["make", "Builder"], ["model", "Model"], ["year", "Year", "numeric"],
   ["hull_number", "Hull number"], ["loa_ft", "LOA (ft)", "decimal"], ["lwl_ft", "LWL (ft)", "decimal"], ["beam_ft", "Beam (ft)", "decimal"],
   ["draft_ft", "Draft (ft)", "decimal"], ["displacement_lb", "Displacement (lb)", "numeric"], ["rig", "Rig"], ["keel", "Keel"],
   ["propeller", "Propeller"], ["home_port", "Home port"],
@@ -88,7 +88,7 @@ export default async function BoatPage({ params, searchParams }: {
             <h2 style={{ marginTop: 0 }}>Boat record</h2>
             <input type="hidden" name="boat_id" value={boat.id} />
             {FIELDS.map(([k, label, mode]) => (
-              <label key={k}>{label}<input name={k} defaultValue={(boat[k] as string | number | null) ?? ""} inputMode={mode as "numeric" | "decimal" | undefined} required={k === "sail_number"} /></label>
+              <label key={k}>{label}<input name={k} defaultValue={(boat[k] as string | number | null) ?? ""} inputMode={mode as "numeric" | "decimal" | undefined} /></label>
             ))}
             <label>Notes<textarea name="notes" defaultValue={boat.notes ?? ""} /></label>
             <SubmitButton>Save boat record</SubmitButton>

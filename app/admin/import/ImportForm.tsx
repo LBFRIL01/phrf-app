@@ -62,7 +62,7 @@ export function ImportForm() {
               <tbody>
                 {rows.map((r, i) => (
                   <tr key={i}>
-                    <td>{i + 1}</td><td>{r.sail_number}</td><td>{r.boat_name}</td><td>{[r.make, r.model].filter(Boolean).join(" ")}</td>
+                    <td>{i + 1}</td><td>{r.sail_number || <span className="badge badge-needs_info">needed</span>}</td><td>{r.boat_name}</td><td>{[r.make, r.model].filter(Boolean).join(" ")}</td>
                     <td>{r.owner_name}{r.owner_email && <div className="muted">{r.owner_email}</div>}</td>
                     <td>{r.received_on}</td><td>{TYPE_LABEL[r.type]}</td><td>{STATUS_LABEL[r.status]}</td><td className="num">{r.rating}</td>
                   </tr>

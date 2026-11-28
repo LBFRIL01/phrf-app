@@ -2,7 +2,7 @@ import Link from "next/link";
 import { requireRole } from "@/lib/auth";
 import { STATUS_LABEL, TYPE_LABEL, formatDate } from "@/lib/labels";
 import type { AppStatus, Application, Boat, Owner, Settings } from "@/lib/types";
-import { StatusBadge } from "@/components/StatusBadge";
+import { SailNumber, StatusBadge } from "@/components/StatusBadge";
 import { Notice } from "@/components/Notice";
 
 export const metadata = { title: "Committee" };
@@ -65,7 +65,7 @@ export default async function CommitteeHome({ searchParams }: { searchParams: Pr
               return (
                 <tr key={a.id}>
                   <td><Link href={`/committee/applications/${a.id}`}>{a.number}</Link>{a.source === "import" && <div className="small muted">imported</div>}</td>
-                  <td>{a.boats?.name ?? ""} <span className="muted">{a.boats?.sail_number}</span><div className="small muted">{[a.boats?.make, a.boats?.model].filter(Boolean).join(" ")}</div></td>
+                  <td>{a.boats?.name ?? ""} <span className="muted"><SailNumber value={a.boats?.sail_number} /></span><div className="small muted">{[a.boats?.make, a.boats?.model].filter(Boolean).join(" ")}</div></td>
                   <td>{a.owners?.full_name ?? ""}</td>
                   <td>{TYPE_LABEL[a.type]}</td>
                   <td>{formatDate(a.received_at)}</td>
