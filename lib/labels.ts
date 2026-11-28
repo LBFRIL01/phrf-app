@@ -50,6 +50,9 @@ export function formatDateTime(value: string | null | undefined): string {
   });
 }
 
-export function boatTitle(b: { name?: string | null; sail_number: string }): string {
-  return b.name ? `${b.name} (${b.sail_number})` : b.sail_number;
+export const SAIL_NEEDED = "sail # needed";
+
+export function boatTitle(b: { name?: string | null; sail_number: string | null }): string {
+  const sail = b.sail_number || SAIL_NEEDED;
+  return b.name ? `${b.name} (${sail})` : sail;
 }

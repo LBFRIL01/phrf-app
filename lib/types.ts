@@ -13,7 +13,7 @@ export interface Profile {
 
 export interface Boat {
   id: string;
-  sail_number: string;
+  sail_number: string | null; // null until known (shows "sail # needed")
   name: string | null;
   make: string | null;
   model: string | null;

@@ -169,7 +169,8 @@ export function mapRows(records: Record<string, string>[]): { rows: ImportRow[];
     if (raw.year && !row.year) problems.push({ row: n, level: "warning", message: `Year "${raw.year}" not understood; left blank.` });
     row.loa_ft = /^\d+(\.\d+)?$/.test(raw.loa_ft ?? "") ? raw.loa_ft! : "";
 
-    if (!row.sail_number) problems.push({ row: n, level: "error", message: "No sail number. Every row needs one." });
+    if (!row.sail_number && !row.boat_name) problems.push({ row: n, level: "error", message: "No sail number or boat name. Every row needs at least one." });
+    else if (!row.sail_number) problems.push({ row: n, level: "warning", message: `No sail number for ${row.boat_name}; the boat will show "Sail # needed" until someone adds it.` });
 
     const t = parseType(raw.type ?? "");
     if (raw.type && !t) problems.push({ row: n, level: "warning", message: `Type "${raw.type}" not understood; using New boat.` });
@@ -196,9 +197,9 @@ export function mapRows(records: Record<string, string>[]): { rows: ImportRow[];
       row[f] = d ?? "";
     }
 
-    if (row.sail_number) {
-      const k = `${normSail(row.sail_number)}|${row.received_on}`;
-      if (seen.has(k)) problems.push({ row: n, level: "warning", message: `Looks like a duplicate of row ${seen.get(k)} (same sail number and date).` });
+    if (row.sail_number || row.boat_name) {
+      const k = `${row.sail_number ? normSail(row.sail_number) : "name:" + row.boat_name.toLowerCase().trim()}|${row.received_on}`;
+      if (seen.has(k)) problems.push({ row: n, level: "warning", message: `Looks like a duplicate of row ${seen.get(k)} (same boat and date).` });
       else seen.set(k, n);
     }
     rows.push(row);

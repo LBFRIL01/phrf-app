@@ -4,7 +4,7 @@ import { requireRole } from "@/lib/auth";
 import { TYPE_LABEL, boatTitle, formatDate, formatDateTime, hasRole } from "@/lib/labels";
 import { summarizeVotes } from "@/lib/voting";
 import type { Application, Boat, Owner, Rating, Settings, Vote } from "@/lib/types";
-import { StatusBadge } from "@/components/StatusBadge";
+import { SailNumber, StatusBadge } from "@/components/StatusBadge";
 import { Notice } from "@/components/Notice";
 import { SubmitButton } from "@/components/SubmitButton";
 import { AttachmentList } from "@/components/AttachmentList";
@@ -79,7 +79,7 @@ export default async function ReviewApplication({ params, searchParams }: {
           <div className="card">
             <h2 style={{ marginTop: 0 }}>Boat</h2>
             <dl className="facts">
-              <dt>Sail number</dt><dd><Link href={`/committee/boats/${boat.id}`}>{boat.sail_number}</Link></dd>
+              <dt>Sail number</dt><dd><Link href={`/committee/boats/${boat.id}`}>{boat.sail_number || "Add sail number"}</Link>{!boat.sail_number && <> <SailNumber value={null} /></>}</dd>
               <dt>Design</dt><dd>{[boat.make, boat.model].filter(Boolean).join(" ")}{boat.year ? `, ${boat.year}` : ""}</dd>
               {boat.loa_ft && <><dt>LOA</dt><dd>{boat.loa_ft} ft</dd></>}
               <dt>Current rating</dt>

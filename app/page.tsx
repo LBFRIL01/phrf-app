@@ -2,11 +2,12 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { formatDate } from "@/lib/labels";
 import { Notice } from "@/components/Notice";
+import { SailNumber } from "@/components/StatusBadge";
 
 export const dynamic = "force-dynamic";
 
 interface PublicRating {
-  boat_id: string; sail_number: string; boat_name: string | null; make: string | null; model: string | null;
+  boat_id: string; sail_number: string | null; boat_name: string | null; make: string | null; model: string | null;
   year: number | null; rating: number; configuration: string; effective_on: string; expires_on: string | null;
 }
 
@@ -45,7 +46,7 @@ export default async function RatingsPage({ searchParams }: { searchParams: Prom
           <tbody>
             {rows.map((r) => (
               <tr key={r.boat_id + r.configuration}>
-                <td>{r.sail_number}</td>
+                <td><SailNumber value={r.sail_number} /></td>
                 <td>{r.boat_name}</td>
                 <td>{[r.make, r.model].filter(Boolean).join(" ")}{r.year ? ` (${r.year})` : ""}{r.configuration !== "Spinnaker" && <div className="small muted show-sm">{r.configuration}</div>}</td>
                 <td className="num"><strong>{r.rating}</strong></td>

@@ -21,10 +21,18 @@ test("matches loose column names", () => {
   assert.deepEqual(r.extra, { "Hull color": "blue" });
 });
 
-test("flags missing sail number and bad rating as errors", () => {
-  const { problems } = mapRows([{ Boat: "No Number", Rating: "fast" }]);
+test("a row needs a sail number or a boat name; a bad rating is an error", () => {
+  const { problems } = mapRows([{ Owner: "Nobody", Rating: "fast" }]);
   const errors = problems.filter((p) => p.level === "error").map((p) => p.message);
   assert.equal(errors.length, 2);
+});
+
+test("a boat name without a sail number imports with a warning", () => {
+  const { rows, problems } = mapRows([{ "Boat Name": "Gulf Breeze", Rating: "183" }]);
+  assert.equal(rows[0].sail_number, "");
+  assert.equal(problems.length, 1);
+  assert.equal(problems[0].level, "warning");
+  assert.match(problems[0].message, /Sail # needed/);
 });
 
 test("rated without a rating becomes received", () => {

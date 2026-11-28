@@ -23,7 +23,7 @@ export default async function ImportPage({ searchParams }: { searchParams: Promi
         preview first, and nothing is saved until you press Import. Every import can be undone.
       </p>
       <p className="small">
-        Column names are matched loosely (for example &quot;Sail #&quot; or &quot;Sail Number&quot;). Only a sail number is required.{" "}
+        Column names are matched loosely (for example &quot;Sail #&quot; or &quot;Sail Number&quot;). Each row needs a sail number or a boat name; boats without a sail number show “Sail # needed” until it is filled in.{" "}
         <a href="/import-template.csv" download>Download a template</a> to see every column the import understands.
       </p>
       <ImportForm />
