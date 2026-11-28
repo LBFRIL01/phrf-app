@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { createClient as createPlainClient } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
+import { SUPABASE_KEY, SUPABASE_URL } from "@/lib/env";
 
 export function LoginForm({ next }: { next: string }) {
   const router = useRouter();
@@ -14,10 +16,14 @@ export function LoginForm({ next }: { next: string }) {
   async function sendCode(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true); setError(null);
-    const supabase = createClient();
-    const { error } = await supabase.auth.signInWithOtp({
+    // The "implicit" flow puts the sign-in in the link itself, so the link
+    // works in any browser (for example when email opens in a different one).
+    const linkClient = createPlainClient(SUPABASE_URL, SUPABASE_KEY, {
+      auth: { flowType: "implicit", persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+    });
+    const { error } = await linkClient.auth.signInWithOtp({
       email: email.trim(),
-      options: { emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}` },
+      options: { emailRedirectTo: `${window.location.origin}/auth/confirm?next=${encodeURIComponent(next)}` },
     });
     setBusy(false);
     if (error) setError(friendly(error.message));
@@ -38,7 +44,7 @@ export function LoginForm({ next }: { next: string }) {
   if (step === "code") {
     return (
       <form onSubmit={verify} className="card stack">
-        <p>Check your email at <strong>{email}</strong> and tap the sign-in link, on this same device and browser. If the email shows a 6-digit code instead, type it here.</p>
+        <p>Check your email at <strong>{email}</strong> and tap the sign-in link. It works in any browser on any device. If the email shows a 6-digit code instead, type it here.</p>
         <label>
           Code
           <input inputMode="numeric" autoComplete="one-time-code" value={code} onChange={(e) => setCode(e.target.value)} required />

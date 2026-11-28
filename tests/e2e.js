@@ -48,6 +48,30 @@ const notice = async (page) => (await page.locator('.notice').allInnerTexts()).j
   assert(sql("select role from profiles where email='brooke@example.com'") === 'admin', 'first user admin');
   ok('First sign-in (email code) becomes admin');
 
+  // A sign-in link works even when opened in a different browser
+  {
+    const a = await (await browser.newContext()).newPage();
+    await a.goto(BASE + '/login');
+    await a.fill('input[type=email]', 'linkuser@example.com');
+    await a.click('text=Email me a sign-in link');
+    await a.waitForSelector('text=Check your email');
+    let link;
+    for (let i = 0; i < 20 && !link; i++) {
+      const r = await (await fetch(`${MAIL}/api/v1/search?query=${encodeURIComponent('to:linkuser@example.com')}&limit=1`)).json();
+      if (r.messages?.length) {
+        const m = await (await fetch(`${MAIL}/api/v1/message/${r.messages[0].ID}`)).json();
+        link = (m.HTML.match(/href="([^"]+verify[^"]+)"/) || [])[1]?.replace(/&amp;/g, '&');
+      }
+      if (!link) await sleep(500);
+    }
+    assert(link, 'link in email');
+    const b = await (await browser.newContext()).newPage();
+    await b.goto(link);
+    await b.waitForURL(/\/my/, { timeout: 15000 });
+    assert((await b.content()).includes('linkuser@example.com'), 'signed in via link in other browser');
+    ok('Sign-in link works when opened in a different browser');
+  }
+
   // committee members sign in once
   const alex = await login(browser, 'alex@example.com');
   const sam = await login(browser, 'sam@example.com');

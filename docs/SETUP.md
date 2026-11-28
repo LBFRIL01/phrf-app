@@ -35,9 +35,8 @@ You will end up with:
 ## 3. Sign-in emails (nothing to do yet)
 
 People sign in with a link Supabase emails them. With Supabase's built-in
-email the message can't be customized, and that's fine: the link works as long
-as it is opened on the same phone or computer (and browser) where they asked
-for it.
+email the message can't be customized, and that's fine: the link works in any
+browser on any device.
 
 Later, when you connect your own email sender (see "Good to know" below),
 Supabase unlocks the templates. Then change the **Magic Link** and **Confirm
