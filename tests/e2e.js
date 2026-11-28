@@ -29,8 +29,8 @@ async function login(browser, email) {
   page.on('pageerror', (e) => console.log('PAGE ERROR', e.message));
   await page.goto(BASE + '/login');
   await page.fill('input[type=email]', email);
-  await page.click('text=Send me a code');
-  await page.waitForSelector('text=We sent a code');
+  await page.click('text=Email me a sign-in link');
+  await page.waitForSelector('text=Check your email');
   await page.fill('input[autocomplete=one-time-code]', await codeFor(email));
   await page.click('button:has-text("Sign in")');
   await page.waitForURL(/\/my/);

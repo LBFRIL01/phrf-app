@@ -59,7 +59,7 @@ export function LoginForm({ next }: { next: string }) {
         <input type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
       </label>
       {error && <p className="notice error">{error}</p>}
-      <button className="button" disabled={busy}>{busy ? "Sending…" : "Send me a code"}</button>
+      <button className="button" disabled={busy}>{busy ? "Sending…" : "Email me a sign-in link"}</button>
     </form>
   );
 }
