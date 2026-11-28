@@ -126,5 +126,5 @@ Checklist for the new maintainer:
 | The site says "Almost there" | The two Supabase settings are missing in Vercel → Settings → Environment Variables. Add them and redeploy. |
 | Error loading anything, after a quiet spell | The free Supabase project paused. Open the Supabase dashboard and press **Restore project**. |
 | "Too many codes were sent recently" | The built-in email limit. Wait an hour, or set up custom SMTP (see SETUP). |
-| Sign-in link opens a page saying it didn't work | It was opened in a different browser or from the installed phone app. Request a new link and open it on the same device and browser. Once custom email is set up, the 6-digit code avoids this. |
+| Sign-in link says it didn't work | Links work once and expire after an hour. Request a new one (wait a minute between requests). |
 | Someone can't see the Committee menu | Their role is still *Boat owner*. Change it on the Admin page. |
