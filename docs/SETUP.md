@@ -81,7 +81,7 @@ Back in Supabase, open **Authentication → URL Configuration**:
 
 - **Site URL**: your Vercel address, e.g. `https://phrf-app.vercel.app`
 - **Redirect URLs**: add `https://phrf-app.vercel.app/**` and
-  `https://*.vercel.app/**` (the second lets preview links sign in too).
+  `https://phrf-app-*.vercel.app/**` (the second lets preview links sign in too).
 
 ## 7. Sign in and make yourself admin
 
